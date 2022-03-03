@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import {HomePage} from "./components/HomePage";
 import {Login} from "./components/Login";
+import {Register} from "./components/Register";
 
 export const UserContext = React.createContext();
 
@@ -21,8 +22,10 @@ export class App extends Component {
             <UserContext.Provider value={this.state.context}>
                 <BrowserRouter>
                     <Routes>
+                        <Route path='/register' element={<Register/>}/>
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/home' element={<HomePage/>}/>
+
                         {/*routers.map(item=> <Route path="/home2" element={<HomePage />} />)*/}
                     </Routes>
                 </BrowserRouter>
