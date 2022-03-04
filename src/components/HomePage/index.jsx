@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {UserContext} from '../../App'
 import {Layout, Menu, Breadcrumb, Row, Col} from 'antd';
+import IndexImg from "./IndexImg";
 
 const { Header, Content, Footer } = Layout;
 export class HomePage extends Component {
@@ -10,7 +11,7 @@ export class HomePage extends Component {
                 {
                     (context) => (
                         <Layout className="layout" style={{height:'100%'}}>
-                            <Header style={{backgroundColor:'orange'}}>
+                            <Header >
                                 {/*<div className="logo" />*/}
 
                                 <Row>
@@ -25,10 +26,10 @@ export class HomePage extends Component {
                                     </Col>*/}
                                 </Row>
                             </Header>
-                            <Content style={{ padding: '2rem 50px',backgroundColor:'wheat' }}>
+                            <Content style={{ height: '25rem',padding: '2rem 50px', }}>
                                 <Row>
                                     <Col offset={2} span={4}>
-                                        <Menu theme="dark" mode="vertical " defaultSelectedKeys={['0']}>
+                                        <Menu   mode="vertical " defaultSelectedKeys={['0']}>
                                             {
                                                  new Array(5).fill(null).map((v,index,_)=>{
                                                     return  <Menu.Item key={index}>{`商品 ${index}`}</Menu.Item>
@@ -38,24 +39,13 @@ export class HomePage extends Component {
                                             <Menu.Item key={1}>{`nav ${1}`}</Menu.Item>*/}
                                         </Menu>
                                     </Col>
-                                </Row>
-                            </Content>
-                            <Content style={{ padding: '2rem 50px',backgroundColor:'wheat' }}>
-                                <Row>
-                                    <Col offset={2} span={4}>
-                                        <Menu theme="dark" mode="vertical " defaultSelectedKeys={['0']}>
-                                            {
-                                                new Array(5).fill(null).map((v,index,_)=>{
-                                                    return  <Menu.Item key={index}>{`商品 ${index}`}</Menu.Item>
-                                                })
-                                            }
-                                            {/*                <Menu.Item key={0}>{`nav ${123}`}</Menu.Item>
-                                            <Menu.Item key={1}>{`nav ${1}`}</Menu.Item>*/}
-                                        </Menu>
+                                    <Col offset={2} span={8}>
+                                        <IndexImg/>
                                     </Col>
                                 </Row>
                             </Content>
-                            <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+
+                            <Footer style={{ textAlign: 'center' }}>fotter</Footer>
                         </Layout>
                     )
                 }

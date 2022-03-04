@@ -9,17 +9,20 @@ import {Urls} from "../Support";
 
 export class Login extends Component {
     doLogin = (username, password) => {
-
+        axios.post("http://localhost:8080/test/test",{username:username,password:password})
+        return
         const urlSearchParams = new URLSearchParams()
 
         urlSearchParams.set("username",username)
         urlSearchParams.set("password",password)
+        console.log(urlSearchParams)
  /*       const FormData = require('form-data');
         const form = new FormData()
 
         form.append("username",username)
         form.append("password",password)*/
         const promise = axios.post(Urls.loginUrl, urlSearchParams)
+       // const promise = axios.post(Urls.loginUrl, "username="+username+"&password="+password)
         promise.then(response => {
             if (response.data.code === 200) {
                 alert('登录成功!');
