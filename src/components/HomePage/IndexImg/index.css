@@ -4,6 +4,7 @@ img{
     text-align: center;
     margin: 0 auto;
     width: 80%;
+    cursor: pointer;
 }
 .Carousel{
     height: 17rem;

@@ -2,9 +2,22 @@ import React, {Component} from 'react';
 import {UserContext} from '../../App'
 import {Layout, Menu, Breadcrumb, Row, Col} from 'antd';
 import IndexImg from "./IndexImg";
-
+import {CategoryMenu} from "./CategoryMenu";
+import './index.css'
 const { Header, Content, Footer } = Layout;
 export class HomePage extends Component {
+
+    showCategoryDetailChange = (display,content)=>{
+        this.setState({
+            categoryDisplay:display,
+            categoryContent:content
+        })
+    }
+
+    state = {
+        categoryDisplay:'none',
+        categoryContent:''
+    }
     render() {
         return (
             <UserContext.Consumer>
@@ -29,15 +42,9 @@ export class HomePage extends Component {
                             <Content style={{ height: '25rem',padding: '2rem 50px', }}>
                                 <Row>
                                     <Col offset={2} span={4}>
-                                        <Menu   mode="vertical " defaultSelectedKeys={['0']}>
-                                            {
-                                                 new Array(5).fill(null).map((v,index,_)=>{
-                                                    return  <Menu.Item key={index}>{`商品 ${index}`}</Menu.Item>
-                                                })
-                                            }
-                            {/*                <Menu.Item key={0}>{`nav ${123}`}</Menu.Item>
-                                            <Menu.Item key={1}>{`nav ${1}`}</Menu.Item>*/}
-                                        </Menu>
+                                        <CategoryMenu showCategoryDetailChange={this.showCategoryDetailChange}/>
+
+                                        <div style={{display:this.state.categoryDisplay}} className={'detail'}>{`${this.state.categoryContent}`}</div>
                                     </Col>
                                     <Col offset={2} span={8}>
                                         <IndexImg/>

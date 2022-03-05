@@ -3,5 +3,6 @@ export const prefix = host/*+'api/'*/
 export const Urls = {
     userRegisterUrl:prefix+'user/register',
     loginUrl:prefix+'login',
-    indexImgUrl:prefix+'index/indexImg'
+    indexImgUrl:prefix+'index/indexImg',
+    categoriesUrl:prefix+'index/category'
 }

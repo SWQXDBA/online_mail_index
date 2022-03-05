@@ -5,46 +5,52 @@ import './index.css'
 import {Urls} from "../../Support";
 import axios from "axios";
 import {Carousel} from "react-bootstrap";
+
 class IndexImg extends Component {
-     settings = {
+    settings = {
         dots: true,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1
     };
-    getImages = ()=>{
-/*        axios.get(Urls.indexImgUrl).then(response=>{
-            response.data.data.forEach(item=> console.log(item))
+    state = {
+        img:[]
+    }
+    getImages = () => {
+        /*        axios.get(Urls.indexImgUrl).then(response=>{
+                    response.data.data.forEach(item=> console.log(item))
 
-        })*/
-        fetch(Urls.indexImgUrl,{
+                })*/
+        fetch(Urls.indexImgUrl, {
             method: 'GET', // or 'PUT'
-        }).then(response=>{
+        }).then(response => {
             return response.json()
-        }).then(data=>{
-            console.log(data)
-            data.data.forEach(item=>console.log(item))
+        }).then(data => {
+            data.data.forEach(item => console.log(item))
+            this.setState({img: data.data})
         })
     }
+
+    jump = (productId)=>{
+        alert(productId)
+    }
+    componentDidMount(){
+        this.getImages()
+    }
     render() {
-       this.getImages()
+
         return (
-            <Carousel interval={2000} style={{textAlign:'center'}} variant="dark">
-                <Carousel.Item>
-                    <img src={'./img/indexImg1.png'} alt={'找不到图片'}/>
-                    <Carousel.Caption>
-                        <h3>First slide label</h3>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                    </Carousel.Caption>
-                </Carousel.Item>
-                <Carousel.Item>
-                    <img src={'./img/img2.png'} alt={'找不到图片'}/>
-                    <Carousel.Caption>
-                        <h3>First slide label</h3>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                    </Carousel.Caption>
-                </Carousel.Item>
+            <Carousel interval={2000} style={{textAlign: 'center'}} variant="dark">
+                {
+                    this.state.img.map(item => {
+                        const {imgUrl, imgBackgroundColor, productId, categoryId, indexType, seq} = item
+                        return <Carousel.Item key={seq} style={{backgroundColor: `${imgBackgroundColor}`}}>
+                            <img onClick={()=>this.jump(productId)} src={`./img/${imgUrl}`} alt={'找不到图片'}/>
+                        </Carousel.Item>
+                    })
+                }
+
             </Carousel>
 
 
