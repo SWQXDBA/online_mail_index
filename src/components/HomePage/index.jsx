@@ -7,17 +7,8 @@ import './index.css'
 const { Header, Content, Footer } = Layout;
 export class HomePage extends Component {
 
-    showCategoryDetailChange = (display,content)=>{
-        this.setState({
-            categoryDisplay:display,
-            categoryContent:content
-        })
-    }
 
-    state = {
-        categoryDisplay:'none',
-        categoryContent:''
-    }
+
     render() {
         return (
             <UserContext.Consumer>
@@ -42,9 +33,7 @@ export class HomePage extends Component {
                             <Content style={{ height: '25rem',padding: '2rem 50px', }}>
                                 <Row>
                                     <Col offset={2} span={4}>
-                                        <CategoryMenu showCategoryDetailChange={this.showCategoryDetailChange}/>
-
-                                        <div style={{display:this.state.categoryDisplay}} className={'detail'}>{`${this.state.categoryContent}`}</div>
+                                        <CategoryMenu/>
                                     </Col>
                                     <Col offset={2} span={8}>
                                         <IndexImg/>
