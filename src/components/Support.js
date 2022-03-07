@@ -4,5 +4,6 @@ export const Urls = {
     userRegisterUrl:prefix+'user/register',
     loginUrl:prefix+'login',
     indexImgUrl:prefix+'index/indexImg',
-    categoriesUrl:prefix+'index/category'
+    categoriesUrl:prefix+'index/category',
+    productByCategoryIdUrl:prefix+'product/findById'
 }

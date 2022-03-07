@@ -21,6 +21,9 @@
     <title>React App</title>
   </head>
   <body>
+
+<!--  解决qq浏览器报错 globalThis is not defined-->
+  <script> this.globalThis || (this.globalThis = this) </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root">
 

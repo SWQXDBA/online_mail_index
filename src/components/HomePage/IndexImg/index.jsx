@@ -27,7 +27,7 @@ class IndexImg extends Component {
         }).then(response => {
             return response.json()
         }).then(data => {
-            data.data.forEach(item => console.log(item))
+
             this.setState({img: data.data})
         })
     }

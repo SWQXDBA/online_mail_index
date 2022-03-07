@@ -20,7 +20,6 @@ export class CategoryMenu extends Component {
         }).then(response => {
             return response.json()
         }).then(data => {
-            data.data.forEach(item => console.log(item))
             this.setState({categories: data.data})
         })
     }
@@ -45,7 +44,7 @@ export class CategoryMenu extends Component {
 
 
         const filtered = categories2.filter(item => {
-            console.log(item)
+
             return item.parentId === parentId && item.level !== 1
         })
         if (filtered.size === 0) {
@@ -59,6 +58,7 @@ export class CategoryMenu extends Component {
                 filtered.map(item => {
                     const {name, level, parentId, icon, slogan, picture, backgroundColor} = item
                     return <Menu.Item
+
                         onClick={() => {
                         }}
                         style={{}} key={name}>

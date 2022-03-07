@@ -4,6 +4,7 @@ import {Layout, Menu, Breadcrumb, Row, Col} from 'antd';
 import IndexImg from "./IndexImg";
 import {CategoryMenu} from "./CategoryMenu";
 import './index.css'
+import {ProductCategoryDetail} from "./ProductCategoryDetail";
 const { Header, Content, Footer } = Layout;
 export class HomePage extends Component {
 
@@ -39,6 +40,9 @@ export class HomePage extends Component {
                                         <IndexImg/>
                                     </Col>
                                 </Row>
+                            </Content>
+                            <Content>
+                                <ProductCategoryDetail/>
                             </Content>
 
                             <Footer style={{ textAlign: 'center' }}>fotter</Footer>
