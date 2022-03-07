@@ -25,32 +25,38 @@ export class ProductCategoryDetail extends Component {
                     response.data.data.forEach(item=> console.log(item))
 
                 })*/
-        const promise = fetch(Urls.categoriesUrl, {
+        //先获取所有的分类
+        fetch(Urls.categoriesUrl, {
             method: 'GET', // or 'PUT'
         }).then(response => {
             return response.json()
         })
-        promise.then(data => {
-            this.setState({categories: data.data})
-            data.data.forEach(sub => {
-                if (sub.level !== 1)
-                    fetch(Urls.productByCategoryIdUrl + `?id=${sub.id}`, {
-                        method: 'GET', // or 'PUT'
-                    }).then(response => {
-                        return response.json()
-                    }).then(productsResult => {
-                        if(this.state.products[sub.id] ==null){
-                            this.state.products[sub.id] = Array()
-                        }
 
-                        this.state.products[sub.id].push(productsResult.data)
+            .then(data => {
+                this.setState({categories: data.data})
 
-                        this.setState({})
+                data.data.forEach(sub => {
+                    //筛选出子分类
+                    if (sub.level !== 1)
+                        //根据分类Id查询商品
+                        fetch(Urls.productByCategoryIdUrl + `?id=${sub.id}`, {
+                            method: 'GET', // or 'PUT'
+                        }).then(response => {
+                            return response.json()
+                        }).then(productsResult => {
+                            //存了一个map 子分类id:数组(商品)
+                            if (this.state.products[sub.id] == null) {
+                                this.state.products[sub.id] = Array()
+                            }
+                            this.state.products[sub.id].push(productsResult.data)
 
-                    })
+                            //如果只是 this.setState() 似乎不会刷新页面
+                            this.setState({})
+
+                        })
+                })
+
             })
-
-        })
 
     }
 
@@ -73,15 +79,15 @@ export class ProductCategoryDetail extends Component {
                                             sub => {
 
                                                 //当前子分类的所有商品
-                                                let products = this.state.products[sub.id];
+                                                let products = this.state.products[sub.id]
 
+                                                let productsDom
                                                 if (products == null) {
-                                                    products = <></>
+                                                    productsDom = <></>
                                                 } else {
-
-                                                    products = products.map(product => {
-
-                                                            return <Col style={{backgroundColor:"green"}} key={product.id} span={2}>
+                                                    productsDom = products.map(product => {
+                                                            return <Col style={{backgroundColor: "green"}} key={product.id}
+                                                                        span={2}>
                                                                 666{product.name}
                                                             </Col>
                                                         }
@@ -94,7 +100,7 @@ export class ProductCategoryDetail extends Component {
                                                     </div>
                                                     <Row className={'CategoryLevel_2'}>
                                                         {
-                                                            products
+                                                            productsDom
                                                         }
                                                     </Row>
                                                 </div>
