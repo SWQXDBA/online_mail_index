@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {Urls} from "../../Support";
 import {Col, Row} from "antd";
 import './index.css'
-
+import {createBrowserHistory} from "history";
+import {history} from "../../../App.js"
 export class ProductCategoryDetail extends Component {
     getSubCategories(parentId) {
 
@@ -19,6 +20,10 @@ export class ProductCategoryDetail extends Component {
     componentDidMount() {
         this.requestSource()
     }
+
+    /*    componentDidMount() {
+            this.requestSource()
+        }*/
 
     requestSource = () => {
         /*        axios.get(Urls.indexImgUrl).then(response=>{
@@ -62,6 +67,7 @@ export class ProductCategoryDetail extends Component {
 
 
     render() {
+
         const categories = this.state.categories;
         return (
             <>
@@ -86,8 +92,15 @@ export class ProductCategoryDetail extends Component {
                                                     productsDom = <></>
                                                 } else {
                                                     productsDom = products.map(product => {
-                                                            return <Col style={{backgroundColor: "green"}} key={product.id}
-                                                                        span={2}>
+                                                            return <Col
+                                                                onClick={() => {
+                                                                    history.push(`/productDetail`,{
+                                                                        productId:product.id
+                                                                    })
+                                                                }}
+
+                                                                style={{backgroundColor: "green"}} key={product.id}
+                                                                span={2}>
                                                                 666{product.name}
                                                             </Col>
                                                         }
