@@ -1,44 +1,45 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Urls} from "../../Support";
 import {Col, Row} from "antd";
 import './index.css'
-import {createBrowserHistory} from "history";
-import {history} from "../../../App.js"
-export class ProductCategoryDetail extends Component {
-    getSubCategories(parentId) {
+import {useNavigate} from "react-router";
 
-        return this.state.categories.filter(item => {
+export function ProductCategoryDetail() {
+    let [categories, setCategories] = useState([]);
+    let [productsMap, setProductsMap] = useState(Array());
+
+    let [finish,setFinish] = useState(false)
+
+    const getSubCategories = (parentId) => {
+
+        return categories.filter(item => {
             return item.parentId === parentId && item.level !== 1
         })
     }
 
-    state = {
-        categories: [],
-        products: Array()
-    }
+    let navigate = useNavigate();
 
-    componentDidMount() {
-        this.requestSource()
-    }
+
+
 
     /*    componentDidMount() {
             this.requestSource()
         }*/
 
-    requestSource = () => {
+    const requestSource = () => {
         /*        axios.get(Urls.indexImgUrl).then(response=>{
                     response.data.data.forEach(item=> console.log(item))
 
                 })*/
         //先获取所有的分类
+        if(finish)return
         fetch(Urls.categoriesUrl, {
             method: 'GET', // or 'PUT'
         }).then(response => {
             return response.json()
         })
-
             .then(data => {
-                this.setState({categories: data.data})
+                categories = data.data
 
                 data.data.forEach(sub => {
                     //筛选出子分类
@@ -50,84 +51,85 @@ export class ProductCategoryDetail extends Component {
                             return response.json()
                         }).then(productsResult => {
                             //存了一个map 子分类id:数组(商品)
-                            if (this.state.products[sub.id] == null) {
-                                this.state.products[sub.id] = Array()
+                            if (productsMap[sub.id] == null) {
+                                productsMap[sub.id] = Array()
                             }
-                            this.state.products[sub.id].push(productsResult.data)
-
-                            //如果只是 this.setState() 似乎不会刷新页面
-                            this.setState({})
-
+                            productsMap[sub.id].push(productsResult.data)
                         })
                 })
 
-            })
+            }).then(()=>{
+            setCategories(categories)
+            setProductsMap(productsMap)
+                setFinish(true)
+        })
 
     }
+    requestSource()
+ //   useEffect()
 
 
-    render() {
+    return (
+        <>
+            <Row className={'CategoryLevel_1'}>
+                <Col span={24}>
 
-        const categories = this.state.categories;
-        return (
-            <>
-                <Row className={'CategoryLevel_1'}>
-                    <Col span={24}>
+                    {
+                        //取出一级分类
+                        categories.filter(item => item.level === 1)
+                            .map(
+                                //1级分类
+                                item => {
+                                    return getSubCategories(item.id).map(
+                                        //2级分类
+                                        sub => {
 
-                        {
-                            //取出一级分类
-                            categories.filter(item => item.level === 1)
-                                .map(
-                                    //1级分类
-                                    item => {
-                                        return this.getSubCategories(item.id).map(
-                                            //2级分类
-                                            sub => {
 
-                                                //当前子分类的所有商品
-                                                let products = this.state.products[sub.id]
+                                            //当前子分类的所有商品
+                                            let products = productsMap[sub.id]
 
-                                                let productsDom
-                                                if (products == null) {
-                                                    productsDom = <></>
-                                                } else {
-                                                    productsDom = products.map(product => {
-                                                            return <Col
-                                                                onClick={() => {
-                                                                    history.push(`/productDetail`,{
-                                                                        productId:product.id
-                                                                    })
-                                                                }}
+                                            let productsDom
+                                            if (products == null) {
+                                                productsDom = <></>
+                                            } else {
+                                                productsDom = products.map(product => {
+                                                        return <Col
+                                                            onClick={() => {
+                                                                // navigate(`/productDetail/${product.id}`)
 
-                                                                style={{backgroundColor: "green"}} key={product.id}
-                                                                span={2}>
-                                                                666{product.name}
-                                                            </Col>
-                                                        }
-                                                    )
-                                                }
 
-                                                return <div key={sub.id}>
-                                                    <div style={{height: '2rem'}}>
-                                                        {`子分类: ${sub.name}`}
-                                                    </div>
-                                                    <Row className={'CategoryLevel_2'}>
-                                                        {
-                                                            productsDom
-                                                        }
-                                                    </Row>
+                                                                navigate(`/productDetail/${product.id}`)
+                                                            }}
+
+                                                            style={{backgroundColor: "green"}} key={product.id}
+                                                            span={2}>
+                                                            666{product.name}
+                                                        </Col>
+                                                    }
+                                                )
+                                            }
+
+                                            return <div key={sub.id}>
+                                                <div style={{height: '2rem'}}>
+                                                    {`子分类: ${sub.name}`}
                                                 </div>
-                                            })
+                                                <Row className={'CategoryLevel_2'}>
+                                                    {
+                                                        productsDom
+                                                    }
+                                                </Row>
+                                            </div>
+                                        })
 
-                                    })
+                                })
 
-                        }
+                    }
 
-                    </Col>
-                </Row>
-            </>
-        );
-    }
+                </Col>
+            </Row>
+        </>
+    );
+
 
 }
 

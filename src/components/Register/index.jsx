@@ -42,7 +42,6 @@ export class Register extends Component {
     }
     render() {
         return (
-
             <div className="login-form">
                 {/*        <img src={'svg/phone.svg'} alt={''}/>*/}
                 <Form
