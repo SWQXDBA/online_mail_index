@@ -6,9 +6,9 @@ import {useNavigate} from "react-router";
 
 export function ProductCategoryDetail() {
     let [categories, setCategories] = useState([]);
-    let [productsMap, setProductsMap] = useState(Array());
+    let [productsMap, setProductsMap] = useState([]);
 
-    let [finish,setFinish] = useState(false)
+    let [productImg, setProductImg] = useState([])
 
     const getSubCategories = (parentId) => {
 
@@ -20,19 +20,12 @@ export function ProductCategoryDetail() {
     let navigate = useNavigate();
 
 
-
-
     /*    componentDidMount() {
             this.requestSource()
         }*/
 
     const requestSource = () => {
-        /*        axios.get(Urls.indexImgUrl).then(response=>{
-                    response.data.data.forEach(item=> console.log(item))
 
-                })*/
-        //先获取所有的分类
-        if(finish)return
         fetch(Urls.categoriesUrl, {
             method: 'GET', // or 'PUT'
         }).then(response => {
@@ -40,40 +33,66 @@ export function ProductCategoryDetail() {
         })
             .then(data => {
                 categories = data.data
-
+                setCategories(new Array(...categories))
                 data.data.forEach(sub => {
+
                     //筛选出子分类
-                    if (sub.level !== 1)
-                        //根据分类Id查询商品
+                    if (sub.level !== 1){
                         fetch(Urls.productByCategoryIdUrl + `?id=${sub.id}`, {
                             method: 'GET', // or 'PUT'
                         }).then(response => {
                             return response.json()
                         }).then(productsResult => {
-                            //存了一个map 子分类id:数组(商品)
-                            if (productsMap[sub.id] == null) {
-                                productsMap[sub.id] = Array()
-                            }
-                            productsMap[sub.id].push(productsResult.data)
+
+                            const products = productsResult.data;
+                            products.forEach(product=>{
+                                //存了一个map 子分类id:数组(商品)
+                                if (productsMap[sub.id] == null) {
+                                    productsMap[sub.id] = Array()
+                                }
+                                productsMap[sub.id].push(product)
+
+
+
+
+                                fetch(Urls.productImgByIdUrl + `?id=${product.id}`, {
+                                    method: 'GET', // or 'PUT'
+                                }).then(r => r.json()).then(result => {
+                                    const imgData = result.data;
+                                    imgData.filter(img=>img.isMain===1) .forEach(img=>{
+                                        const {productId} = img
+                                        productImg[productId] = imgData
+
+                                        setProductImg(new Array(...productImg))
+                                    })
+
+                                })
+                                setProductsMap(new Array(...productsMap))
+                            })
+
+
                         })
+                    }
+                        //根据分类Id查询商品
+
                 })
 
-            }).then(()=>{
-            setCategories(categories)
-            setProductsMap(productsMap)
-                setFinish(true)
-        })
+            })
 
     }
-    requestSource()
- //   useEffect()
+
+    useEffect(()=>{
+        requestSource()
+    },[])
+    //   useEffect()
+
+
 
 
     return (
         <>
             <Row className={'CategoryLevel_1'}>
                 <Col span={24}>
-
                     {
                         //取出一级分类
                         categories.filter(item => item.level === 1)
@@ -84,7 +103,6 @@ export function ProductCategoryDetail() {
                                         //2级分类
                                         sub => {
 
-
                                             //当前子分类的所有商品
                                             let products = productsMap[sub.id]
 
@@ -93,21 +111,30 @@ export function ProductCategoryDetail() {
                                                 productsDom = <></>
                                             } else {
                                                 productsDom = products.map(product => {
+
+                                                    const img = productImg[product.id];
+
+                                                    if(img === undefined){
+                                                        return <Col key={product.id}/>
+                                                    }
+
+
                                                         return <Col
-                                                            onClick={() => {
-                                                                // navigate(`/productDetail/${product.id}`)
 
-
-                                                                navigate(`/productDetail/${product.id}`)
-                                                            }}
-
-                                                            style={{backgroundColor: "green"}} key={product.id}
+                                                            style={{backgroundColor: "green"}}
+                                                            key={product.id}
                                                             span={2}>
-                                                            666{product.name}
+                                                            <img
+                                                                onClick={() => {
+                                                                    // navigate(`/productDetail/${product.id}`)
+                                                                    navigate(`/productDetail/${product.id}`)
+                                                                }}
+                                                                src={`./img/${img.url}`} alt={'未找到图片'}/>
                                                         </Col>
                                                     }
                                                 )
                                             }
+
 
                                             return <div key={sub.id}>
                                                 <div style={{height: '2rem'}}>
