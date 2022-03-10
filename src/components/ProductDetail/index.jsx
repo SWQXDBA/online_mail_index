@@ -19,7 +19,7 @@ function ProductDetail (){
                 <Layout style={{height:'10rem',backgroundColor:'pink'}}>
                     <Sider style={{backgroundColor:'green'}}>left sidebar</Sider>
                     <Content >
-                        <Row style={{height:'7rem'}}/>
+                        <Row style={{height:'4rem'}}/>
                         <Row style={{height:'58rem',backgroundColor:'white'}}>
                             <Col offset={4} span={8} style={{backgroundColor:'aliceblue',height:'100%',}}>
                                 <Row style={{backgroundColor:'red',height:'3rem'}}/>
