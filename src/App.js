@@ -35,9 +35,8 @@ export class App extends Component {
                     <Routes >
                         <Route path='/register' element={<Register/>}/>
                         <Route path='/login' element={<Login/>}/>
-                        <Route path='/home' element={<HomePage/>}/>
+                        <Route path='/' element={<HomePage/>}/>
                         <Route path='/productDetail/:productId' element = {<ProductDetail/>}/>
-                        {/*routers.map(item=> <Route path="/home2" element={<HomePage />} />)*/}
                     </Routes>
                 </BrowserRouter>
             </UserContext.Provider>

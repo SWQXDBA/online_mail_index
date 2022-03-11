@@ -8,7 +8,7 @@ export function ProductCategoryDetail() {
     let [categories, setCategories] = useState([]);
     let [productsMap, setProductsMap] = useState([]);
 
-    let [productImg, setProductImg] = useState([])
+    let [productImg, setproductImgs] = useState([])
 
     const getSubCategories = (parentId) => {
 
@@ -45,6 +45,7 @@ export function ProductCategoryDetail() {
                         }).then(productsResult => {
 
                             const products = productsResult.data;
+
                             products.forEach(product=>{
                                 //存了一个map 子分类id:数组(商品)
                                 if (productsMap[sub.id] == null) {
@@ -59,11 +60,12 @@ export function ProductCategoryDetail() {
                                     method: 'GET', // or 'PUT'
                                 }).then(r => r.json()).then(result => {
                                     const imgData = result.data;
+
                                     imgData.filter(img=>img.isMain===1) .forEach(img=>{
                                         const {productId} = img
-                                        productImg[productId] = imgData
+                                        productImg[productId] = img
 
-                                        setProductImg(new Array(...productImg))
+                                        setproductImgs(new Array(...productImg))
                                     })
 
                                 })
@@ -114,21 +116,32 @@ export function ProductCategoryDetail() {
 
                                                     const img = productImg[product.id];
 
+
                                                     if(img === undefined){
                                                         return <Col key={product.id}/>
                                                     }
+                                                    console.log(<img
+                                                        style={{height:'100%',width:'100%'}}
+                                                        onClick={() => {
 
+                                                            // navigate(`/productDetail/${product.id}`)
+                                                            navigate(`/productDetail/${product.id}`)
+                                                        }}
 
+                                                        src={`/img/${img.url}`} alt={'未找到图片'}/>)
                                                         return <Col
 
                                                             style={{backgroundColor: "green"}}
                                                             key={product.id}
                                                             span={2}>
                                                             <img
+                                                                style={{height:'100%',width:'100%'}}
                                                                 onClick={() => {
+
                                                                     // navigate(`/productDetail/${product.id}`)
                                                                     navigate(`/productDetail/${product.id}`)
                                                                 }}
+
                                                                 src={`./img/${img.url}`} alt={'未找到图片'}/>
                                                         </Col>
                                                     }

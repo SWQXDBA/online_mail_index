@@ -6,5 +6,7 @@ export const Urls = {
     indexImgUrl:prefix+'index/indexImg',
     categoriesUrl:prefix+'index/category',
     productByCategoryIdUrl:prefix+'product/findByCategoryId',
-    productImgByIdUrl:prefix+'product/findImgByProductId'
+    productImgByIdUrl:prefix+'product/findImgByProductId',
+    productByIdUrl:prefix+'product/findById'
+
 }
