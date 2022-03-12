@@ -6,6 +6,7 @@ import {
     Router, BrowserRouter
 
 } from "react-router-dom";
+import 'antd/dist/antd.variable.min.css';
 import {createBrowserHistory} from "history"
 import {HomePage} from "./components/HomePage";
 import {Login} from "./components/Login";

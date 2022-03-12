@@ -1,17 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import './index.css'
 
-import {useParams,} from "react-router";
+import {useNavigate, useParams,} from "react-router";
 import {Content, Header} from "antd/es/layout/layout";
-import {Col, Layout, Row} from "antd";
+import {Button, Col, InputNumber, Layout, Row} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Urls} from "../Support";
 
 function ProductDetail() {
     let urlParams = useParams();
 
+    let navigate = useNavigate()
     let [imgs, setImgs] = useState()
-    let [product,setProduct] = useState({name:''})
+    let [product, setProduct] = useState({name: ''})
+    let [sku, setSku] = useState()
+    let [buyCount,setBuyCount] = useState(1)
+    const selectSku = (sku) => {
+        setSku(sku)
+    }
+
 
     const requestSource = () => {
 
@@ -28,6 +35,33 @@ function ProductDetail() {
             return response.json()
         }).then(data => {
             setProduct(data.data)
+        })
+    }
+    const buyCountChange = (val)=>{
+        buyCount = val
+        console.log(val)
+    }
+    const addShoppingCart = ()=> {
+        fetch(Urls.addShoppingCartUrl, {
+            method: 'POST', // or 'PUT'
+            credentials : 'include',
+            body: JSON.stringify({
+                productId:product.id,
+                skuId:sku.id,
+                cartNum:buyCount
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+           return response.json()
+        }).then(data=>{
+            if(data.code===500){
+                alert(data.msg)
+                navigate('/login')
+            }else{
+                alert('添加成功!')
+            }
         })
     }
 
@@ -93,7 +127,70 @@ function ProductDetail() {
                                     }}>
                                         {product.name}
                                     </Col>
+                                    <Col span={4} style={{
+                                        height: '5rem',
+                                        backgroundColor: 'green',
+                                        textAlign: 'center',
+                                        lineHeight: '5rem'
+                                    }}>
+                                        {`销量: ${product.soldNum}`}
+                                    </Col>
                                 </Row>
+                                <Row gutter={[0, 0]} style={{height: '5rem', backgroundColor: 'white'}}>
+                                    <Col offset={0} span={4} className={'centerCol'}>
+                                        <p>选择套餐</p>
+                                    </Col>
+                                    {
+                                        product.skus?.map(sku => {
+                                            return <Col key={sku.id} span={4} className={'centerCol'}>
+                                                <Button
+                                                    onClick={() => selectSku(sku)}
+                                                >{sku.name}</Button>
+
+                                            </Col>
+                                        })
+                                    }
+
+                                </Row>
+
+                                <Row style={{backgroundColor: 'white'}}>
+                                    <Col offset={0} span={4} className={'centerCol'}>
+                                        <p>套餐信息:</p>
+                                    </Col>
+                                    {
+
+                                        sku ?
+                                            <Col  className={'centerCol'}>
+                                                <span>{`  ${sku.attribute} `} </span>
+                                                &nbsp;
+                                                <span>{`  库存: ${sku.stock} `} </span>
+                                                &nbsp;
+                                                <span >{`  原价: ${sku.originalPrice} `} </span>
+                                                &nbsp;
+                                                <span >{`  折扣: ${sku.discountsStr} `} </span>
+                                                &nbsp;
+                                            </Col>
+                                        :<></>
+                                    }
+
+                                </Row>
+                                <Row style={{backgroundColor: 'white'}}>
+                                    <Col span={4} className={'centerCol'}>
+                                        <span>{'购买数量'}</span>
+                                    </Col>
+                                    <Col span={4} className={'centerCol'}>
+                                        <InputNumber min={1} defaultValue={1}
+                                                     onChange={buyCountChange}/>
+                                    </Col>
+                                    <Col span={4} className={'centerCol'}>
+                                        <Button onClick={addShoppingCart} >
+                                            加入购物车
+                                        </Button>
+                                    </Col>
+                                </Row>
+
+
+
                             </Col>'
                         </Row>
                         main content

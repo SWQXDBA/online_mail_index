@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
-import 'antd/dist/antd.variable.min.css';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './index.css'
 import axios from "axios";

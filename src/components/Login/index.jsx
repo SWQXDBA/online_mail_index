@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import {Form, Input, Button, Checkbox} from 'antd';
-import 'antd/dist/antd.variable.min.css';
+
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import './index.css'
 import axios from "axios";
 import {Urls} from "../Support";
+import {useNavigate} from "react-router";
 
 
 export class Login extends Component {
     doLogin = (username, password) => {
-        axios.post("http://localhost:8080/test/test",{username:username,password:password})
-        return
+        axios.defaults.withCredentials = true
         const urlSearchParams = new URLSearchParams()
 
         urlSearchParams.set("username",username)
@@ -26,6 +26,7 @@ export class Login extends Component {
         promise.then(response => {
             if (response.data.code === 200) {
                 alert('登录成功!');
+                window.history.go(-1)
             } else {
                 alert(response.data.msg);
             }
@@ -33,6 +34,7 @@ export class Login extends Component {
     }
     onFinish = (values: any) => {
 
+        console.log(1)
         const {username, password} = values
 
         this.doLogin(username, password)
@@ -51,11 +53,10 @@ export class Login extends Component {
     render() {
         return (
 
-            <div className="login-form">
+            <div className="loginForm">
                 {/*        <img src={'svg/phone.svg'} alt={''}/>*/}
                 <Form
                     name="normal_login"
-
                     initialValues={{remember: true}}
                     onFinish={this.onFinish}
                     onFinishFailed={this.onFinishFailed}
