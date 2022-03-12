@@ -34,7 +34,7 @@ export class Login extends Component {
     }
     onFinish = (values: any) => {
 
-        console.log(1)
+
         const {username, password} = values
 
         this.doLogin(username, password)

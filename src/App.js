@@ -12,6 +12,7 @@ import {HomePage} from "./components/HomePage";
 import {Login} from "./components/Login";
 import {Register} from "./components/Register";
 import ProductDetail from "./components/ProductDetail";
+import PersonalCenter from "./components/PersonalCenter";
 export const UserContext = React.createContext();
 /*export const history = createBrowserHistory();
 history.listen((data)=>{
@@ -38,6 +39,8 @@ export class App extends Component {
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/' element={<HomePage/>}/>
                         <Route path='/productDetail/:productId' element = {<ProductDetail/>}/>
+                        <Route path='/personalCenter' element = {<PersonalCenter/>}/>
+
                     </Routes>
                 </BrowserRouter>
             </UserContext.Provider>
