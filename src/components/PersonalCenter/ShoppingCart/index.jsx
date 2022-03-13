@@ -45,6 +45,11 @@ export function ShoppingCart (){
 
         }
     }
+    const totalPrice = ()=>{
+        let price = 0
+        shoppingCarts?.forEach(item=>price+=item.productPrice)
+        return price
+    }
 
     useEffect(() => {
         requestSource()
@@ -53,22 +58,37 @@ export function ShoppingCart (){
             <>
                 {
                     shoppingCarts?.map(item=>{
-                        const {productName,skuAttribute,id,cartNum} = item
+                        const {productName,skuAttribute,id,cartNum,productPrice} = item
                         return <Row key={id}>
-                            <Col span={4}  style={{backgroundColor:'pink'}}>
+                            <Col span={1} >
+                                <p>{`商品:`}</p>
+                                <p>{`套餐:`}</p>
+                            </Col>
+                            <Col span={4}  >
                                 <p>{`${productName}`}</p>
                                 <p>{`${skuAttribute}`}</p>
                             </Col>
 
-                            <Col offset={4}   className={'centerCol'} style={{textAlign:"center"}}>
+                            <Col  offset={2} span={4}    className={'centerCol'} style={{textAlign:"center"}}>
                                 <p style={{height:'5rem',lineHeight:'5rem'}}> {`数量: ${cartNum}`}</p>
                             </Col>
-                            <Col offset={4}  className={'centerCol'} style={{textAlign:"center"}}>
+                            <Col offset={2} span={4}    className={'centerCol'} style={{textAlign:"center"}}>
+                                <p style={{height:'5rem',lineHeight:'5rem'}}> {`价格: ${productPrice}`}</p>
+                            </Col>
+                            <Col  span={4}   className={'centerCol'} style={{textAlign:"center"}}>
                                 <Button onClick={()=>deleteCart(id)} danger> 删除</Button>
                             </Col>
                         </Row>
                     })
                 }
+                <Row>
+                    <Col offset={13} span={4} className={'centerCol'} style={{textAlign:"center"}}>
+                        <p style={{height:'5rem',lineHeight:'5rem'}}> {`总价: ${totalPrice()}`}</p>
+                    </Col>
+                    <Col   span={4}  className={'centerCol'}>
+                        <Button type="primary">下单</Button>
+                    </Col>
+                </Row>
             </>
         );
 

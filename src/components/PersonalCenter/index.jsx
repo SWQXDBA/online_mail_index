@@ -1,15 +1,20 @@
 import React, {Component, useEffect, useState} from 'react';
-import {Urls} from "../Support";
+
 import {Col, Layout, Menu, Row} from "antd";
 import {useNavigate} from "react-router";
 import {Content, Header} from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
-import './index.css'
+
 import {ShoppingCart} from "./ShoppingCart";
+import {UserAddress} from "./UserAddress";
 function PersonalCenter(){
 
 
+    let[content,setContent] = useState(<></>)
 
+    const changeContent = (content)=>{
+        setContent(content)
+    }
 
     const requestSource = () => {
 
@@ -51,11 +56,11 @@ function PersonalCenter(){
                                 mode="inline"
                                 theme="dark"
                             >
-                                <Menu.Item>
-                                    1
+                                <Menu.Item onClick = {()=>{setContent(<ShoppingCart/>)}}>
+                                    购物车
                                 </Menu.Item>
-                                <Menu.Item>
-                                    2
+                                <Menu.Item onClick = {()=>{setContent(<UserAddress/>)}}>
+                                    收货地址
                                 </Menu.Item>
                             </Menu>
                         </Sider>
@@ -63,7 +68,7 @@ function PersonalCenter(){
                             <Row style={{height:'15rem'}}/>
                             <Row >
                                 <Col style={{border:'1px solid'}} offset={6} span={12} >
-                                    <ShoppingCart/>
+                                    {content}
                                 </Col>
                             </Row>
 
