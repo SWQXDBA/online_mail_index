@@ -6,12 +6,14 @@ import {Content, Header} from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 
 import {AddUserAddress} from "./AddUserAddress";
+import {ShowAddress} from "./ShowAddress";
 
 export function UserAddress(){
 
 
     return(
         <>
+            <ShowAddress/>
             <AddUserAddress/>
         </>
 

@@ -1,11 +1,30 @@
 import React, {Component, useState} from 'react';
 import {Button, Checkbox, Form, Input} from "antd";
+import {Urls} from "../../../Support";
+import {useNavigate} from "react-router";
 
 export function AddUserAddress(){
 
-
+    const[state,setState1] = useState(false)
+    let navigate = useNavigate();
     const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
+
+        fetch(Urls.addUserAddressUrl, {
+            method: 'POST',
+            credentials: "include",
+            body:JSON.stringify(values),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        }).then(r=>r.json()).then(data=>{
+            if(data.code===500){
+                alert(data.msg)
+                navigate('/login')
+            }else{
+                alert('添加成功')
+                setState1(!state)
+            }
+        })
     };
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
