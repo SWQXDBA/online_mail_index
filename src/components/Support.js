@@ -9,6 +9,7 @@ export const Urls = {
     productImgByIdUrl:prefix+'product/findImgByProductId',
     productByIdUrl:prefix+'product/findById',
     addShoppingCartUrl:prefix+'shoppingCart/add',
-    getAllShoppingCartUrl:prefix+'shoppingCart/getAll'
+    getAllShoppingCartUrl:prefix+'shoppingCart/getAll',
+    deleteShoppingCartUrl:prefix+'shoppingCart/delete'
 
 }

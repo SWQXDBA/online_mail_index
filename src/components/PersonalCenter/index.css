@@ -1,11 +1,13 @@
-.ProductDetail{
+.ProductDetail {
     background-color: red;
     width: 100%;
     height: 90rem;
 }
 
-p{
-     height: 2.5rem;
-     text-align: left;
-     line-height: 2.5rem
- }
+p {
+    height: 2.5rem;
+    text-align: left;
+    line-height: 2.5rem;
+    padding: 0;
+    margin: 0
+}

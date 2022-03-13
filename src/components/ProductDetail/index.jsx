@@ -39,7 +39,6 @@ function ProductDetail() {
     }
     const buyCountChange = (val)=>{
         buyCount = val
-        console.log(val)
     }
     const addShoppingCart = ()=> {
         fetch(Urls.addShoppingCartUrl, {

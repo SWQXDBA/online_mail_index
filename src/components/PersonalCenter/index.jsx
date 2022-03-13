@@ -1,18 +1,19 @@
 import React, {Component, useEffect, useState} from 'react';
 import {Urls} from "../Support";
-import {Col, Layout, Row} from "antd";
+import {Col, Layout, Menu, Row} from "antd";
 import {useNavigate} from "react-router";
 import {Content, Header} from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import './index.css'
+import {ShoppingCart} from "./ShoppingCart";
 function PersonalCenter(){
 
-    let [shoppingCarts,setShoppingCarts] = useState([])
 
-    let navigate = useNavigate()
+
+
     const requestSource = () => {
 
-        fetch(Urls.getAllShoppingCartUrl, {
+/*        fetch(Urls.getAllShoppingCartUrl, {
             method: 'GET', // or 'PUT'
             credentials : 'include'
         }).then(response => {
@@ -25,7 +26,7 @@ function PersonalCenter(){
                 setShoppingCarts(data.data)
             }
 
-        })
+        })*/
 
     }
 
@@ -45,24 +46,27 @@ function PersonalCenter(){
                     </Header>
                     <Layout>
                         <Sider style={{backgroundColor:'red'}}>
-
+                            <Menu
+                                defaultSelectedKeys={['1']}
+                                mode="inline"
+                                theme="dark"
+                            >
+                                <Menu.Item>
+                                    1
+                                </Menu.Item>
+                                <Menu.Item>
+                                    2
+                                </Menu.Item>
+                            </Menu>
                         </Sider>
                         <Content>
-                            {
-                                shoppingCarts?.map(item=>{
-                                    const {productName,skuAttribute,id,cartNum} = item
-                                    return <Row key={id}>
-                                        <Col  style={{backgroundColor:'pink'}}>
-                                            <p  style={{padding:0,margin:0}}>{`${productName}`}</p>
-                                            <p  style={{padding:0,margin:0}}>{`${skuAttribute}`}</p>
-                                        </Col>
+                            <Row style={{height:'15rem'}}/>
+                            <Row >
+                                <Col style={{border:'1px solid'}} offset={6} span={12} >
+                                    <ShoppingCart/>
+                                </Col>
+                            </Row>
 
-                                        <Col offset={1}  className={'centerCol'} style={{backgroundColor:'pink',textAlign:"center"}}>
-                                            <p> {`数量: ${cartNum}`}</p>
-                                        </Col>
-                                    </Row>
-                                })
-                            }
                         </Content>
                     </Layout>
 
