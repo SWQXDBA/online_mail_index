@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import './index.css'
 
-import {useNavigate, useParams,} from "react-router";
+import {useLocation, useNavigate, useParams,} from "react-router";
 import {Content, Header} from "antd/es/layout/layout";
 import {Button, Col, InputNumber, Layout, Row} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Urls} from "../Support";
+import {HomeOutlined, HomeTwoTone} from "@ant-design/icons";
+import {useSearchParams} from "react-router-dom";
+
 
 function ProductDetail() {
     let urlParams = useParams();
@@ -18,7 +21,8 @@ function ProductDetail() {
     const selectSku = (sku) => {
         setSku(sku)
     }
-
+    let location = useLocation();
+    let [searchParams, setSearchParams] = useSearchParams();
 
     const requestSource = () => {
 
@@ -41,6 +45,10 @@ function ProductDetail() {
         buyCount = val
     }
     const addShoppingCart = ()=> {
+        if(sku==null){
+            alert("未选择套餐!")
+            return
+        }
         fetch(Urls.addShoppingCartUrl, {
             method: 'POST', // or 'PUT'
             credentials : 'include',
@@ -57,7 +65,14 @@ function ProductDetail() {
         }).then(data=>{
             if(data.code===500){
                 alert(data.msg)
-                navigate('/login')
+                const urlSearchParams = new URLSearchParams();
+                urlSearchParams.append("path",'/productDetail/'+product.id)
+                navigate('/login?'+urlSearchParams)
+/*                let location = useLocation();
+                let [searchParams, setSearchParams] = useSearchParams();
+
+                setSearchParams({path:'/productDetail/'+product.id})
+                navigate('/login'+location.search)*/
             }else{
                 alert('添加成功!')
             }
@@ -96,7 +111,14 @@ function ProductDetail() {
 
         <div className={'ProductDetail'}>
             <Layout style={{height: '70rem'}}>
-                <Header style={{height: '5rem'}}>header</Header>
+                <Header style={{height: '5rem'}}>
+                    <Row>
+                        <Col className={'centerCol'}>
+                            <HomeTwoTone style={{fontSize:'2rem'}} onClick={()=>navigate('/')} />
+                        </Col>
+                    </Row>
+
+                </Header>
                 <Layout style={{height: '10rem', backgroundColor: 'pink'}}>
                     <Sider style={{backgroundColor: 'green'}}>left sidebar</Sider>
                     <Content>

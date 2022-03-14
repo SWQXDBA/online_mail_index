@@ -1,85 +1,91 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {Col, Layout, Menu, Row} from "antd";
-import {useNavigate} from "react-router";
+import {useLocation, useNavigate} from "react-router";
 import {Content, Header} from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 
 import {ShoppingCart} from "./ShoppingCart";
 import {UserAddress} from "./UserAddress";
-function PersonalCenter(){
+import {HomeTwoTone} from "@ant-design/icons";
+import {useSearchParams} from "react-router-dom";
+import {Urls} from "../Support";
+
+function PersonalCenter() {
 
 
-    let[content,setContent] = useState(<></>)
+    let [content, setContent] = useState(<ShoppingCart/>)
 
-    const changeContent = (content)=>{
+    const changeContent = (content) => {
         setContent(content)
     }
+    let location = useLocation();
+
+
 
     const requestSource = () => {
 
-/*        fetch(Urls.getAllShoppingCartUrl, {
+        fetch(Urls.isLoginUrl, {
             method: 'GET', // or 'PUT'
-            credentials : 'include'
+            credentials: 'include'
         }).then(response => {
             return response.json()
         }).then(data => {
-            if(data.code===500){
+            if (data.code === 500) {
                 alert(data.msg)
-                navigate('/login')
-            }else{
-                setShoppingCarts(data.data)
+                const urlSearchParams = new URLSearchParams();
+                urlSearchParams.append("path",'/personalCenter')
+                 navigate('/login?' + `${urlSearchParams}`)
             }
-
-        })*/
+        })
 
     }
 
+    let navigate = useNavigate();
     useEffect(() => {
         requestSource()
     }, [])
 
-        return (
-            <>
+    return (
+        <>
+            <Layout>
+                <Header>
+                    <Row>
+                        <Col className={'centerCol'}>
+                            <HomeTwoTone style={{fontSize: '2rem'}} onClick={() => navigate('/')}/>
+                        </Col>
+                    </Row>
+                </Header>
                 <Layout>
-                    <Header>
-                        <Row>
-                            <Col>
-                                {`你好`}
-                            </Col>
-                        </Row>
-                    </Header>
-                    <Layout>
-                        <Sider style={{backgroundColor:'red'}}>
-                            <Menu
-                                defaultSelectedKeys={['1']}
-                                mode="inline"
-                                theme="dark"
-                            >
-                                <Menu.Item onClick = {()=>{setContent(<ShoppingCart/>)}}>
-                                    购物车
-                                </Menu.Item>
-                                <Menu.Item onClick = {()=>{setContent(<UserAddress/>)}}>
-                                    收货地址
-                                </Menu.Item>
-                            </Menu>
-                        </Sider>
-                        <Content>
-                            <Row style={{height:'15rem'}}/>
-                            <Row >
-                                <Col style={{border:'1px solid'}} offset={6} span={12} >
-                                    {content}
-                                </Col>
-                            </Row>
-
-                        </Content>
-                    </Layout>
-
+                    <Sider style={{backgroundColor: 'red'}}>
+                        <Menu
+                            defaultSelectedKeys={['1']}
+                            mode="inline"
+                            theme="dark"
+                        >
+                            <Menu.Item key="1" onClick={() => {
+                                setContent(<ShoppingCart/>)
+                            }}>
+                                购物车
+                            </Menu.Item>
+                            <Menu.Item key="2" onClick={() => {
+                                setContent(<UserAddress/>)
+                            }}>
+                                收货地址
+                            </Menu.Item>
+                        </Menu>
+                    </Sider>
+                    <Content>
+                        <Row style={{height: '15rem'}}/>
+                        {content}
+                    </Content>
                 </Layout>
 
-            </>
+            </Layout>
 
-        );
+        </>
+
+    );
 
 }
 
