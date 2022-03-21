@@ -53,7 +53,6 @@ function ProductDetail() {
             method: 'POST', // or 'PUT'
             credentials : 'include',
             body: JSON.stringify({
-                productId:product.id,
                 skuId:sku.id,
                 cartNum:buyCount
             }),

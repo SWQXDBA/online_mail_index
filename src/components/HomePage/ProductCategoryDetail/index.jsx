@@ -120,15 +120,7 @@ export function ProductCategoryDetail() {
                                                     if(img === undefined){
                                                         return <Col key={product.id}/>
                                                     }
-                                                    console.log(<img
-                                                        style={{height:'100%',width:'100%'}}
-                                                        onClick={() => {
 
-                                                            // navigate(`/productDetail/${product.id}`)
-                                                            navigate(`/productDetail/${product.id}`)
-                                                        }}
-
-                                                        src={`/img/${img.url}`} alt={'未找到图片'}/>)
                                                         return <Col
 
                                                             style={{backgroundColor: "green"}}

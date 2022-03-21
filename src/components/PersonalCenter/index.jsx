@@ -32,7 +32,6 @@ function PersonalCenter() {
             return response.json()
         }).then(data => {
             if (data.code === 500) {
-                alert(data.msg)
                 const urlSearchParams = new URLSearchParams();
                 urlSearchParams.append("path",'/personalCenter')
                  navigate('/login?' + `${urlSearchParams}`)

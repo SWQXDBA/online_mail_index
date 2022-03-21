@@ -43,7 +43,7 @@ export function ShowAddress() {
                         commonAddress
                     } = item
                     return <Row key={id}>
-                        <Col className={"centerCol"} span={2}>
+                        <Col className={"centerCol"} span={4}>
                             <p>{`收货人: ${receiverName}`}</p>
                         </Col>
                         <Col className={"centerCol"}  span={4}>
