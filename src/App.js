@@ -40,7 +40,6 @@ export class App extends Component {
                         <Route path='/' element={<HomePage/>}/>
                         <Route path='/productDetail/:productId' element = {<ProductDetail/>}/>
                         <Route path='/personalCenter' element = {<PersonalCenter/>}/>
-
                     </Routes>
                 </BrowserRouter>
             </UserContext.Provider>

@@ -46,7 +46,7 @@ class IndexImg extends Component {
                     this.state.img.map(item => {
                         const {imgUrl, imgBackgroundColor, productId, categoryId, indexType, seq} = item
                         return <Carousel.Item key={seq} style={{backgroundColor: `${imgBackgroundColor}`}}>
-                            <img onClick={()=>this.jump(productId)} src={`./img/${imgUrl}`} alt={'找不到图片'}/>
+                            <img onClick={()=>this.jump(productId)} src={`${Urls.IMGUrl}${imgUrl}`} alt={'找不到图片'}/>
                         </Carousel.Item>
                     })
                 }

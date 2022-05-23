@@ -42,7 +42,6 @@ export class CategoryMenu extends Component {
     }
     getSubCategories(parentId, categories2) {
 
-
         const filtered = categories2.filter(item => {
 
             return item.parentId === parentId && item.level !== 1
@@ -52,19 +51,15 @@ export class CategoryMenu extends Component {
         }
 
         return <Menu
-
-            mode="horizontal">
+            mode="horizontal" >
             {
                 filtered.map(item => {
                     const {name, level, parentId, icon, slogan, picture, backgroundColor} = item
                     return <Menu.Item
-
                         onClick={() => {
                         }}
                         style={{}} key={name}>
-                        >
                         {`子分类:${name}`}
-                        {` ${name}`}
                     </Menu.Item>
                 })
             }
@@ -94,7 +89,6 @@ export class CategoryMenu extends Component {
                                             categoryDisplay:'block',
                                             categoryContent:this.getSubCategories(item.id, categories)
                                         })
-
                                     }}
                                     onMouseLeave={this.tryToHideSub}
                                     onClick={() => {
@@ -114,7 +108,7 @@ export class CategoryMenu extends Component {
                         //阻止隐藏子分类详情 使得tryToHideSub失败
                         this.state.categoryDisplay = 'block'
                     }}
-                    style={{display:this.state.categoryDisplay}} className={'detail'}
+                    style={{display:this.state.categoryDisplay,backgroundColor:"white"}} className={'detail'}
                     onMouseLeave={this.tryToHideSub}
                 >
                     {this.state.categoryContent}

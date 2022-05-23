@@ -1,6 +1,7 @@
 export const host = 'http://localhost:8080/'
 export const prefix = host/*+'api/'*/
 export const Urls = {
+    IMGUrl:prefix+'imgs/',
     userRegisterUrl:prefix+'user/register',
     loginUrl:prefix+'login',
     isLoginUrl:prefix+'user/isLogin',

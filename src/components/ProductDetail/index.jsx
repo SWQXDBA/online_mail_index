@@ -100,7 +100,7 @@ function ProductDetail() {
             <img
                 style={{height: '100%', width: '100%'}}
 
-                src={`/img/${mainImg.url}`}
+                src={`${Urls.IMGUrl}${mainImg.url}`}
 
                 alt={'图片未找到'}/>
 

@@ -70,12 +70,15 @@ export function Login() {
                     rules={[{type: 'string', message: '必须为string类型'}
                         , {min: 6, message: '必须大于6位'}
                         , {max: 15, message: '最大为15位'}
-                        , {required: true, message: '必须输入密码'}
+                        , {required: true, message: '必须输入用户名'}
                         , {pattern: '[A-Za-z0-9_\\-\u4e00-\u9fa5]+', message: '请输入英文或数字或中文字符'}]}
 
                 >
+
                     <Input prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="用户名"/>
+
                 </Form.Item>
+
                 <Form.Item
                     name="password"
                     rules={[{type: 'string', message: '必须为string类型'}
@@ -84,14 +87,15 @@ export function Login() {
                         , {required: true, message: '必须输入密码'}
                         , {pattern: '[A-Za-z0-9]+', message: '请输入大小写英文或数字'}]
                     }
-
                 >
                     <Input
                         prefix={<LockOutlined className="site-form-item-icon"/>}
                         type="password"
                         placeholder="密码"
                     />
+
                 </Form.Item>
+
                 <Form.Item>
                     <Form.Item name="remember" valuePropName="checked" noStyle>
                         <Checkbox>记住我</Checkbox>

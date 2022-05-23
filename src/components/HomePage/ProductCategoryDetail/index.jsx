@@ -134,7 +134,7 @@ export function ProductCategoryDetail() {
                                                                     navigate(`/productDetail/${product.id}`)
                                                                 }}
 
-                                                                src={`./img/${img.url}`} alt={'未找到图片'}/>
+                                                                src={`${Urls.IMGUrl}${img.url}`} alt={'未找到图片'}/>
                                                         </Col>
                                                     }
                                                 )

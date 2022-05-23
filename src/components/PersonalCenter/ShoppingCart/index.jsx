@@ -37,8 +37,7 @@ export function ShoppingCart (){
             return response.json()
         }).then(data => {
             if(data.code===500){
-                alert(data.msg)
-                navigate('/login')
+            //    getAllShoppingCartUrl中已经会导向login了
             }else{
                 const addresses = data.data;
                 setAddress(addresses)
@@ -50,6 +49,7 @@ export function ShoppingCart (){
         })
     }
     const placeOrder = ()=>{
+
 
         fetch(Urls.placeOrderUrl,{
             method:"POST",
@@ -66,6 +66,8 @@ export function ShoppingCart (){
             else {
                 alert('下单失败!请稍后再试')
             }
+            //刷新一下
+            requestSource()
         })
     }
     const deleteCart = (id)=>{
@@ -148,7 +150,7 @@ export function ShoppingCart (){
                             <p style={{height:'5rem',lineHeight:'5rem'}}> {`总价: ${totalPrice()}`}</p>
                         </Col>
                         <Col   span={4}  className={'centerCol'}>
-                            <Button type="primary" onClick={placeOrder}>下单</Button>
+                            <Button type="primary" onClick={placeOrder} disabled={shoppingCarts==null||shoppingCarts.length===0}>下单</Button>
                         </Col>
                     </Row>
 

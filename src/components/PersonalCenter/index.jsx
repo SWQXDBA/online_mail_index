@@ -47,7 +47,7 @@ function PersonalCenter() {
 
     return (
         <>
-            <Layout>
+            <Layout style={{height:"80rem"}}>
                 <Header>
                     <Row>
                         <Col className={'centerCol'}>
@@ -56,7 +56,7 @@ function PersonalCenter() {
                     </Row>
                 </Header>
                 <Layout>
-                    <Sider style={{backgroundColor: 'red'}}>
+                    <Sider style={{}}>
                         <Menu
                             defaultSelectedKeys={['1']}
                             mode="inline"
@@ -79,7 +79,6 @@ function PersonalCenter() {
                         {content}
                     </Content>
                 </Layout>
-
             </Layout>
 
         </>
